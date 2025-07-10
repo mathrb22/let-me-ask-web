@@ -1,8 +1,7 @@
 <div align="center">
-<div>
+
 <h1>Let me ask - Frontend</h1>
 
-</div>
 </div>
 <div align="center">
    <a href="https://github.com/mathrb22">
@@ -85,7 +84,7 @@ A aplicação está sendo desenvolvida com o intuito de aprimorar os conheciment
     </td>
     <td align="center" width="100">
       <a href="https://tanstack.com/query" target="_blank" rel="noopener noreferrer">
-      <img width="60" src="https://seeklogo.com/images/R/react-query-logo-1340EA4CE9-seeklogo.com.png" alt="React Query" title="React Query"/>
+      <img width="60" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/react_query.png" alt="React Query" title="React Query"/>
       </a>
     </td>
     <td align="center" width="140">
