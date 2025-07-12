@@ -117,7 +117,7 @@ A aplicação está sendo desenvolvida com o intuito de aprimorar os conheciment
 
 ## ✨ Features
 
-🚧 **Sistema de salas inteligentes:** gerenciamento de salas com integração de IA.<br/>
+✅ **Sistema de salas:** navegação e listagem de salas disponíveis via API.<br/>
 🚧 **Transcrição em tempo real:** captura e processamento de áudio de transmissões ao vivo.<br/>
 🚧 **Processamento vetorial:** armazenamento de dados semânticos para busca eficiente.<br/>
 🚧 **Busca semântica:** identificação inteligente de respostas já fornecidas.<br/>
@@ -145,6 +145,10 @@ npm run dev
 ```
 
 A aplicação estará disponível em http://localhost:5173. Você poderá acessá-la a partir do seu navegador.
+
+### 🔗 Integração com Backend
+
+A aplicação está configurada para se conectar com uma API backend em `http://localhost:3333`. Certifique-se de que o servidor backend esteja rodando para ter acesso completo às funcionalidades de salas.
 
 ## 💡 Como contribuir
 
