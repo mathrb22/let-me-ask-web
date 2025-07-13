@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { z } from 'zod/v4';
 import { useCreateRoom } from '@/http/use-create-room';
 // import { useCreateRoom } from '@/http/use-create-room';
@@ -32,6 +33,8 @@ type CreateRoomFormData = z.infer<typeof createRoomSchema>;
 export function CreateRoomForm() {
   const { mutateAsync: createRoom } = useCreateRoom();
 
+  const navigate = useNavigate();
+
   const createRoomForm = useForm<CreateRoomFormData>({
     resolver: zodResolver(createRoomSchema),
     defaultValues: {
@@ -41,9 +44,15 @@ export function CreateRoomForm() {
   });
 
   async function handleCreateRoom({ name, description }: CreateRoomFormData) {
-    await createRoom({ name, description });
+    const result = await createRoom({ name, description });
 
     createRoomForm.reset();
+
+    if (result.roomId) {
+      navigate(`/room/${result.roomId}`);
+    } else {
+      alert('Não foi possível criar a sala. Tente novamente.');
+    }
   }
 
   return (
