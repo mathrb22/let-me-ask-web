@@ -28,8 +28,8 @@
 [**Objetivo**](#-objetivo) &nbsp;&nbsp;**|**&nbsp;&nbsp;
 [**Tecnologias e ferramentas**](#-tecnologias-e-ferramentas) &nbsp;&nbsp;**|**&nbsp;&nbsp;
 [**Features**](#-features) &nbsp;&nbsp;**|**&nbsp;&nbsp;
-[**Protótipo**](#-protótipo) &nbsp;&nbsp;**|**&nbsp;&nbsp;
 [**Instalação e execução**](#-instalação-e-execução) &nbsp;&nbsp;**|**&nbsp;&nbsp;
+[**Integração com o Backend**](#-integração-com-o-backend) &nbsp;&nbsp;**|**&nbsp;&nbsp;
 [**Como contribuir**](#-como-contribuir) &nbsp;&nbsp;**|**&nbsp;&nbsp;
 [**Licença**](#-licença)
 
@@ -41,22 +41,19 @@
 
 Este repositório contém o código-fonte do **frontend** do projeto **Let me ask**, desenvolvido durante a **NLW Agents (Next Level Week)** da [**Rocketseat**](https://github.com/Rocketseat).
 
-Este projeto irá integrar **agentes de IA**, **busca semântica** e **processamento de dados vetoriais** para fornecer respostas automáticas às perguntas dos participantes durante transmissões ao vivo. O sistema funcionará da seguinte forma: com base na transcrição em tempo real da apresentação, a IA processará e armazenará vetores semânticos dos assuntos abordados. Quando um usuário fizer uma pergunta na sala, o sistema utilizará busca semântica para verificar se essa questão já foi respondida pelo apresentador na transcrição e, caso positivo, fornecerá automaticamente a resposta contextualizada.
-
-A aplicação oferecerá um sistema inteligente de salas (rooms) com funcionalidades otimizadas para integração com agentes de IA e processamento avançado de dados vetoriais.
+Este projeto integra a **API do Google Gemini**, **busca semântica** e **processamento de dados vetoriais** para fornecer respostas automáticas às perguntas dos participantes durante transmissões ao vivo. O sistema funciona da seguinte forma: com base na transcrição em tempo real da apresentação, a IA processa e armazena vetores semânticos dos assuntos abordados. Quando um usuário faz uma pergunta na sala, o sistema utiliza de busca semântica para verificar se essa questão já foi respondida pelo apresentador na transcrição e, caso positivo, fornece automaticamente a resposta contextualizada.
 
 <!-- <img alt="Let me ask - Room page" src=".github/room-page.png" width="100%"/> -->
 
 ## 🎯 Objetivo
 
-O objetivo principal do **Let me ask** é de criar uma solução inteligente para transmissões ao vivo, onde perguntas dos participantes serão respondidas automaticamente através de inteligência artificial. O sistema utilizará:
+O objetivo principal do **Let me ask** é de criar uma solução inteligente para transmissões ao vivo, onde perguntas dos participantes serão respondidas automaticamente através de inteligência artificial. O sistema utiliza:
 
 - **Transcrição em tempo real** de transmissões ao vivo
 - **Processamento de dados vetoriais** para armazenar contexto semântico
 - **Busca semântica** para identificar se perguntas já foram respondidas
-- **Agente de IA** para fornecer respostas contextualmente relevantes
 
-A aplicação está sendo desenvolvida com o intuito de aprimorar os conhecimentos em React, Vite, TypeScript, Tailwind CSS, React Query e React Router, além de integrar tecnologias modernas de IA e processamento de linguagem natural.
+A aplicação foi desenvolvida com o intuito de aprimorar os conhecimentos em React, Vite, TypeScript, Tailwind CSS, React Query e React Router, além de integrar tecnologias modernas de IA e processamento de linguagem natural.
 
 ## 🚀 Tecnologias e ferramentas
 
@@ -117,11 +114,14 @@ A aplicação está sendo desenvolvida com o intuito de aprimorar os conheciment
 
 ## ✨ Features
 
-✅ **Sistema de salas:** navegação e listagem de salas disponíveis via API.<br/>
-🚧 **Transcrição em tempo real:** captura e processamento de áudio de transmissões ao vivo.<br/>
-🚧 **Processamento vetorial:** armazenamento de dados semânticos para busca eficiente.<br/>
-🚧 **Busca semântica:** identificação inteligente de respostas já fornecidas.<br/>
-🚧 **Agentes de IA:** respostas automáticas contextualmente relevantes.<br/>
+✅ **Sistema de salas:** criação, navegação e listagem de salas disponíveis via API.<br/>
+✅ **Formulário de perguntas:** interface intuitiva para envio de perguntas com validação.<br/>
+✅ **Perguntas e respostas:** exibição de perguntas com respostas geradas por IA em tempo real.<br/>
+✅ **Gravação de áudio:** captura e upload de áudio em tempo real com divisão em chunks.<br/>
+✅ **Integração com IA:** respostas automáticas contextualmente relevantes via **Google Gemini API.**<br/>
+✅ **Transcrição em tempo real:** processamento de áudio para texto via backend.<br/>
+✅ **Processamento vetorial:** armazenamento de vetores semânticos _(embeddings)_ para busca eficiente.<br/>
+✅ **Busca semântica:** identificação inteligente de respostas já fornecidas anteriormente.<br/>
 
 ## 🔧 Instalação e execução
 
@@ -146,9 +146,34 @@ npm run dev
 
 A aplicação estará disponível em http://localhost:5173. Você poderá acessá-la a partir do seu navegador.
 
-### 🔗 Integração com Backend
+## 🔗 Integração com o Backend
 
-A aplicação está configurada para se conectar com uma API backend em `http://localhost:3333`. Certifique-se de que o servidor backend esteja rodando para ter acesso completo às funcionalidades de salas.
+Esta aplicação frontend requer uma API backend para funcionar completamente. O servidor está configurado para rodar em `http://localhost:3333` e é **essencial** para o funcionamento das principais funcionalidades.
+
+### 📦 Repositório da backend
+
+O código-fonte do backend está disponível em um repositório separado:
+
+🔗 **[Let me ask - Server (API)](https://github.com/mathrb22/let-me-ask-server)**
+
+### ⚙️ Funcionalidades do backend
+
+O backend é responsável por:
+
+- 🏠 **Gerenciamento de salas**: criação, listagem e gerenciamento de salas de Q&A
+- ❓ **Sistema de perguntas**: armazenamento e processamento de perguntas dos usuários
+- 🎙️ **Processamento de áudio**: captura, processamento e transcrição de áudio em tempo real
+- 🤖 **Integração com IA**: conexão com _Google Gemini API_ para geração de respostas
+- 🔍 **Busca semântica**: algoritmo de busca vetorial para identificar contexto
+- 📊 **Processamento vetorial**: geração e armazenamento de vetores semânticos _(embeddings)_
+
+### 🚀 Como executar o backend
+
+Para ter acesso completo às funcionalidades do sistema, é necessário configurar e executar o servidor backend.
+
+📋 **Siga o guia completo de instalação e configuração:**
+
+🔗 **[Instalação e execução da API](https://github.com/mathrb22/let-me-ask-server?tab=readme-ov-file#-instala%C3%A7%C3%A3o-e-execu%C3%A7%C3%A3o)**
 
 ## 💡 Como contribuir
 
