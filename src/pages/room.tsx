@@ -1,9 +1,13 @@
-import { ArrowLeft, Radio } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { AudioRecorderModal } from '@/components/audio-recorder-modal';
 import { QuestionForm } from '@/components/question-form';
 import { QuestionList } from '@/components/question-list';
+import { FloatingScrollToTop } from '@/components/scroll-to-top';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useRoom } from '@/http/use-room';
 
 type RoomParams = {
   roomId: string;
@@ -11,14 +15,15 @@ type RoomParams = {
 
 export function Room() {
   const params = useParams<RoomParams>();
+  const { data: room, isLoading: isLoadingRoom } = useRoom(params.roomId || '');
 
   if (!params.roomId) {
     return <Navigate replace to="/" />;
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
-      <div className="container mx-auto max-w-4xl px-4 py-8">
+    <div className="min-h-screen bg-background px-4">
+      <div className="container mx-auto max-w-[1000px] py-8">
         <div className="mb-8">
           <div className="mb-4 flex items-center justify-between">
             <Link to="/">
@@ -27,18 +32,21 @@ export function Room() {
                 Voltar ao Início
               </Button>
             </Link>
-            <Link to={`/room/${params.roomId}/audio`}>
-              <Button className="flex items-center gap-2" variant="secondary">
-                <Radio className="size-4" />
-                Gravar Áudio
-              </Button>
-            </Link>
+            <AudioRecorderModal roomId={params.roomId} />
           </div>
           <h1 className="mb-2 font-bold text-3xl text-foreground">
-            Sala de Perguntas
+            {isLoadingRoom ? (
+              <Skeleton className="h-8 w-2/3" />
+            ) : (
+              room?.name || 'Sala de Perguntas'
+            )}
           </h1>
           <p className="text-muted-foreground">
-            Faça perguntas e receba respostas com IA
+            {isLoadingRoom ? (
+              <Skeleton className="h-5 w-full" />
+            ) : (
+              room?.description || 'Faça perguntas e receba respostas com IA'
+            )}
           </p>
         </div>
 
@@ -48,6 +56,8 @@ export function Room() {
 
         <QuestionList roomId={params.roomId} />
       </div>
+
+      <FloatingScrollToTop />
     </div>
   );
 }

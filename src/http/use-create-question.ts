@@ -8,6 +8,9 @@ export function useCreateQuestion(roomId: string) {
 
   return useMutation({
     mutationFn: async (data: CreateQuestionRequest) => {
+      // Artificial delay to show loading state
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const response = await fetch(
         `http://localhost:3333/rooms/${roomId}/questions`,
         {

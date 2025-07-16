@@ -1,6 +1,8 @@
 <div align="center">
 
-<h1>Let me ask - Frontend</h1>
+<img alt="Let me ask - Logo" src=".github/letmeask-logo-white.svg" width="180"/>
+
+<br/>
 
 </div>
 <div align="center">
@@ -41,7 +43,7 @@
 
 Este repositório contém o código-fonte do **frontend** do projeto **Let me ask**, desenvolvido durante a **NLW Agents (Next Level Week)** da [**Rocketseat**](https://github.com/Rocketseat).
 
-Este projeto integra a **API do Google Gemini**, **busca semântica** e **processamento de dados vetoriais** para fornecer respostas automáticas às perguntas dos participantes durante transmissões ao vivo. O sistema funciona da seguinte forma: com base na transcrição em tempo real da apresentação, a IA processa e armazena vetores semânticos dos assuntos abordados. Quando um usuário faz uma pergunta na sala, o sistema utiliza de busca semântica para verificar se essa questão já foi respondida pelo apresentador na transcrição e, caso positivo, fornece automaticamente a resposta contextualizada.
+Este projeto integra a **API do Google Gemini**, **busca semântica** e **processamento de dados vetoriais** para fornecer respostas automáticas às perguntas dos participantes durante transmissões ao vivo. O sistema funciona da seguinte forma: com base na transcrição em tempo real da apresentação, a IA processa e armazena vetores semânticos dos assuntos abordados. Quando um usuário faz uma pergunta na sala, o sistema utiliza busca semântica para verificar se essa questão já foi respondida pelo apresentador na transcrição e, caso positivo, fornece automaticamente a resposta contextualizada.
 
 <!-- <img alt="Let me ask - Room page" src=".github/room-page.png" width="100%"/> -->
 
@@ -114,14 +116,43 @@ A aplicação foi desenvolvida com o intuito de aprimorar os conhecimentos em Re
 
 ## ✨ Features
 
-✅ **Sistema de salas:** criação, navegação e listagem de salas disponíveis via API.<br/>
-✅ **Formulário de perguntas:** interface intuitiva para envio de perguntas com validação.<br/>
-✅ **Perguntas e respostas:** exibição de perguntas com respostas geradas por IA em tempo real.<br/>
-✅ **Gravação de áudio:** captura e upload de áudio em tempo real com divisão em chunks.<br/>
-✅ **Integração com IA:** respostas automáticas contextualmente relevantes via **Google Gemini API.**<br/>
+### 🏠 **Sistema de Salas**
+
+✅ **Criação e listagem de salas:** interface para criação, navegação e listagem de salas disponíveis via API.<br/>
+✅ **Estados de carregamento:** exibição de skeleton loading durante o carregamento das salas para melhor experiência do usuário.<br/>
+✅ **Estados vazios:** componentes de No-content quando não há salas cadastradas com ilustrações e call-to-action.<br/>
+
+### ❓ **Sistema de Perguntas**
+
+✅ **Formulário intuitivo:** interface para envio de perguntas com validação avançada e contador de caracteres.<br/>
+✅ **Perguntas e respostas:** exibição organizada de perguntas com respostas geradas por IA em tempo real.<br/>
+✅ **Feedback visual:** indicadores de status durante a geração de respostas pela IA.<br/>
+
+### 🎙️ **Gravação de Áudio Inteligente**
+
+✅ **Modal de gravação:** interface simplificada em modal para gravação de áudio, substituindo a página dedicada.<br/>
+✅ **Controles avançados:** botões para iniciar, pausar, retomar e finalizar gravação com feedback visual.<br/>
+✅ **Gravação em segundo plano:** possibilidade de gravar áudio enquanto visualiza as perguntas e respostas.<br/>
+✅ **Timer em tempo real:** cronômetro exibindo o tempo de gravação no formato _HH:MM:SS_.<br/>
+✅ **Upload automático:** captura e upload de áudio em tempo real com divisão em chunks de 10 segundos.<br/>
+
+### 🤖 **Integração com IA**
+
+✅ **Respostas automáticas:** respostas contextualmente relevantes via **Google Gemini API**.<br/>
 ✅ **Transcrição em tempo real:** processamento de áudio para texto via backend.<br/>
 ✅ **Processamento vetorial:** armazenamento de vetores semânticos _(embeddings)_ para busca eficiente.<br/>
 ✅ **Busca semântica:** identificação inteligente de respostas já fornecidas anteriormente.<br/>
+
+### 🎨 **Interface e Experiência do Usuário**
+
+A aplicação conta com uma **interface moderna e responsiva**, incluindo:
+
+✅ **Design responsivo:** interface adaptável para diferentes tamanhos de tela.<br/>
+✅ **Estados de carregamento** com skeleton loading para melhor experiência do usuário<br/>
+✅ **Gravação de áudio simplificada** através de modal integrado à página da sala com exibição de tempo de gravação e botões de controle de pausa, retomada e finalização<br/>
+✅ **Tema claro/escuro** com alternância suave e persistência de preferência<br/>
+✅ **Navegação otimizada** com header fixo e botão de rolagem automática para o topo da página<br/>
+✅ **Feedback visual** em tempo real para todas as interações do usuário
 
 ## 🔧 Instalação e execução
 

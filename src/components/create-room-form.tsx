@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod/v4';
@@ -31,7 +32,7 @@ const createRoomSchema = z.object({
 type CreateRoomFormData = z.infer<typeof createRoomSchema>;
 
 export function CreateRoomForm() {
-  const { mutateAsync: createRoom } = useCreateRoom();
+  const { mutateAsync: createRoom, isPending } = useCreateRoom();
 
   const navigate = useNavigate();
 
@@ -97,7 +98,7 @@ export function CreateRoomForm() {
                   <FormItem>
                     <FormLabel>Descrição</FormLabel>
                     <FormControl>
-                      <Textarea {...field} />
+                      <Textarea {...field} disabled={isPending} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -105,8 +106,15 @@ export function CreateRoomForm() {
               }}
             />
 
-            <Button className="w-full" type="submit">
-              Criar sala
+            <Button className="w-full" disabled={isPending} type="submit">
+              {isPending ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Criando sala...
+                </>
+              ) : (
+                'Criar sala'
+              )}
             </Button>
           </form>
         </Form>

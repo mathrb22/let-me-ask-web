@@ -1,14 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, Sparkles } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -20,13 +15,17 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useCreateQuestion } from '@/http/use-create-question';
 
-// Esquema de validação no mesmo arquivo conforme solicitado
+const MAX_QUESTION_LENGTH = 500;
+
 const createQuestionSchema = z.object({
   question: z
     .string()
-    .min(1, 'Pergunta é obrigatória')
+    .min(1, 'Digite sua pergunta')
     .min(10, 'Pergunta deve ter pelo menos 10 caracteres')
-    .max(500, 'Pergunta deve ter menos de 500 caracteres'),
+    .max(
+      MAX_QUESTION_LENGTH,
+      `Pergunta deve ter menos de ${MAX_QUESTION_LENGTH} caracteres`
+    ),
 });
 
 type CreateQuestionFormData = z.infer<typeof createQuestionSchema>;
@@ -46,7 +45,10 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
   });
 
   async function handleCreateQuestion(data: CreateQuestionFormData) {
-    await createQuestion(data);
+    await createQuestion({
+      ...data,
+      question: data.question.trim(),
+    });
 
     form.reset();
   }
@@ -55,39 +57,52 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Fazer uma Pergunta</CardTitle>
-        <CardDescription>
-          Digite sua pergunta abaixo para receber uma resposta gerada por I.A.
-        </CardDescription>
-      </CardHeader>
       <CardContent>
         <Form {...form}>
           <form
-            className="flex flex-col gap-4"
+            className="flex flex-col items-start gap-4"
             onSubmit={form.handleSubmit(handleCreateQuestion)}
           >
             <FormField
               control={form.control}
               name="question"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sua Pergunta</FormLabel>
+                <FormItem className="w-full">
+                  <FormLabel>O que você gostaria de saber?</FormLabel>
                   <FormControl>
                     <Textarea
                       className="min-h-[100px]"
                       disabled={isSubmitting}
-                      placeholder="O que você gostaria de saber?"
+                      placeholder="Digite sua pergunta para receber uma resposta gerada por IA com base na gravação..."
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <div className="flex justify-between text-sm">
+                    <div className="flex-1">
+                      <FormMessage />
+                    </div>
+                    <span
+                      className={`text-muted-foreground ${field.value.length > MAX_QUESTION_LENGTH ? 'text-destructive' : ''}`}
+                    >
+                      {field.value.length}/{MAX_QUESTION_LENGTH}
+                    </span>
+                  </div>
                 </FormItem>
               )}
             />
 
-            <Button disabled={isSubmitting} type="submit">
-              Enviar pergunta
+            <Button className="w-54" disabled={isSubmitting} type="submit">
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Enviando pergunta...
+                </>
+              ) : (
+                <>
+                  <Sparkles />
+                  Enviar pergunta
+                </>
+              )}
             </Button>
           </form>
         </Form>

@@ -11,12 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
+import { Skeleton } from './ui/skeleton';
 
 export function RoomList() {
   const { data, isLoading } = useRooms();
 
   return (
-    <Card>
+    <Card className="my-8">
       <CardHeader>
         <CardTitle>Salas recentes</CardTitle>
         <CardDescription>
@@ -24,8 +25,40 @@ export function RoomList() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        {isLoading && (
-          <p className="text-muted-foreground text-sm">Carregando salas...</p>
+        {isLoading &&
+          Array.from({ length: 8 }).map((_, index) => (
+            <div
+              className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3"
+              key={`skeleton-room-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
+                index
+              }`}
+            >
+              <div className="flex flex-1 flex-col gap-2">
+                <Skeleton className="h-5 w-3/4" />
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-5 w-20" />
+                </div>
+              </div>
+              <Skeleton className="h-4 w-12" />
+            </div>
+          ))}
+
+        {!isLoading && data && data.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div
+              className="mb-4 h-32 w-32 bg-center bg-contain bg-no-repeat"
+              role="img"
+              style={{ backgroundImage: 'url(/search-empty.svg)' }}
+            />
+            <h3 className="font-medium text-foreground text-lg">
+              Nenhuma sala encontrada
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              Crie sua primeira sala para começar a receber perguntas
+            </p>
+          </div>
         )}
 
         {data?.map((room) => {

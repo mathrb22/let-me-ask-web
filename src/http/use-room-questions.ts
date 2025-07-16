@@ -5,6 +5,9 @@ export function useRoomQuestions(roomId: string) {
   return useQuery({
     queryKey: ['get-questions', roomId],
     queryFn: async () => {
+      // Artificial delay to show skeleton loading
+      await new Promise((resolve) => setTimeout(resolve, 600));
+
       const response = await fetch(
         `http://localhost:3333/rooms/${roomId}/questions`
       );
