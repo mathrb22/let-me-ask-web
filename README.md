@@ -3,6 +3,7 @@
 <img alt="Let me ask - Logo" src=".github/letmeask-logo-white.svg" width="180"/>
 
 <br/>
+<br/>
 
 </div>
 <div align="center">
