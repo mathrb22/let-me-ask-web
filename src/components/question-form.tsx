@@ -91,7 +91,11 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
               )}
             />
 
-            <Button className="w-54" disabled={isSubmitting} type="submit">
+            <Button
+              className="w-full md:w-54"
+              disabled={isSubmitting}
+              type="submit"
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />

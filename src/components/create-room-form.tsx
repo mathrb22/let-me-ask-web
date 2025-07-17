@@ -98,7 +98,11 @@ export function CreateRoomForm() {
                   <FormItem>
                     <FormLabel>Descrição</FormLabel>
                     <FormControl>
-                      <Textarea {...field} disabled={isPending} />
+                      <Textarea
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Digite a descrição da sala..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

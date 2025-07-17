@@ -4,10 +4,10 @@ import { FloatingScrollToTop } from '@/components/scroll-to-top';
 
 export function CreateRoom() {
   return (
-    <div className="min-h-screen px-4">
+    <div className="min-h-screen px-4 pt-8">
       <div className="mx-auto max-w-[1000px]">
         <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2">
-          <div className="sticky top-24">
+          <div className="md:sticky md:top-24">
             <CreateRoomForm />
           </div>
           <RoomList />

@@ -46,7 +46,7 @@ export function FloatingScrollToTop() {
 
   return (
     <Button
-      className="fixed right-6 bottom-6 z-50 size-10 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+      className="fixed right-4 bottom-6 z-50 size-10 rounded-full border border-border/70 shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-secondary"
       onClick={scrollToTop}
       size="icon"
       variant="secondary"

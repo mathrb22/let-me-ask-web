@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRooms } from '@/http/use-rooms';
-// import { useRooms } from '@/http/use-rooms';
 import { dayjs } from '@/lib/dayjs';
 import { Badge } from './ui/badge';
 import {
@@ -14,10 +13,10 @@ import {
 import { Skeleton } from './ui/skeleton';
 
 export function RoomList() {
-  const { data, isLoading } = useRooms();
+  const { data, isLoading, error } = useRooms();
 
   return (
-    <Card className="my-8">
+    <Card className="mb-12">
       <CardHeader>
         <CardTitle>Salas recentes</CardTitle>
         <CardDescription>
@@ -57,6 +56,23 @@ export function RoomList() {
             </h3>
             <p className="text-muted-foreground text-sm">
               Crie sua primeira sala para começar a receber perguntas
+            </p>
+          </div>
+        )}
+
+        {!isLoading && error && (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div
+              className="mb-4 h-32 w-32 bg-center bg-contain bg-no-repeat"
+              role="img"
+              style={{ backgroundImage: 'url(/search-empty.svg)' }}
+            />
+            <h3 className="font-medium text-foreground text-lg">
+              Erro ao carregar salas
+            </h3>
+            <p className="text-muted-foreground text-sm">
+              Não foi possível carregar as salas recentes. Tente novamente mais
+              tarde.
             </p>
           </div>
         )}

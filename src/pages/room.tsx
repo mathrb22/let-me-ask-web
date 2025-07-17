@@ -22,7 +22,7 @@ export function Room() {
   }
 
   return (
-    <div className="min-h-screen bg-background px-4">
+    <div className="min-h-screen bg-background px-4 pb-12">
       <div className="container mx-auto max-w-[1000px] py-8">
         <div className="mb-8">
           <div className="mb-4 flex items-center justify-between">
