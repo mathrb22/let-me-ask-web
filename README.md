@@ -191,7 +191,7 @@ A aplicação estará disponível em http://localhost:5173. Você poderá acess�
 
 Esta aplicação frontend requer uma API backend para funcionar completamente. O servidor está configurado para rodar em `http://localhost:3333` e é **essencial** para o funcionamento das principais funcionalidades.
 
-### 📦 Repositório da backend
+### 📦 Repositório do backend
 
 O código-fonte do backend está disponível em um repositório separado:
 
