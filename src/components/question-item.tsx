@@ -26,9 +26,9 @@ export function QuestionItem({ question }: QuestionItemProps) {
                 <MessageSquare className="size-4 text-primary" />
               </div>
             </div>
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               <p className="mb-1 font-medium text-foreground">Pergunta</p>
-              <p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed">
+              <p className="overflow-wrap-anywhere whitespace-pre-line break-all text-muted-foreground text-sm leading-relaxed">
                 {question.question}
               </p>
             </div>
@@ -41,7 +41,7 @@ export function QuestionItem({ question }: QuestionItemProps) {
                   <Bot className="size-4 text-secondary-foreground" />
                 </div>
               </div>
-              <div className="flex-1">
+              <div className="min-w-0 flex-1">
                 <p className="mb-1 font-medium text-foreground">
                   Resposta da IA
                 </p>
@@ -61,7 +61,7 @@ export function QuestionItem({ question }: QuestionItemProps) {
                       </div>
                     </div>
                   ) : (
-                    <p className="whitespace-pre-line text-sm leading-relaxed">
+                    <p className="overflow-wrap-anywhere break-word whitespace-pre-line text-sm leading-relaxed">
                       {question.answer}
                     </p>
                   )}

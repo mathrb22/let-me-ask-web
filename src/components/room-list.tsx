@@ -1,48 +1,45 @@
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useRooms } from '@/http/use-rooms';
-import { dayjs } from '@/lib/dayjs';
-import { Badge } from './ui/badge';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
+import { RoomCard } from './room-card';
 import { Skeleton } from './ui/skeleton';
 
-export function RoomList() {
-  const { data, isLoading, error } = useRooms();
+interface RoomListProps {
+  searchQuery?: string;
+}
+
+export function RoomList({ searchQuery }: RoomListProps) {
+  const { data, isLoading, error } = useRooms(searchQuery);
 
   return (
-    <Card className="mb-12">
-      <CardHeader>
-        <CardTitle>Salas recentes</CardTitle>
-        <CardDescription>
-          Acesso rápido para as salas criadas recentemente
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        {isLoading &&
-          Array.from({ length: 8 }).map((_, index) => (
-            <div
-              className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3"
-              key={`skeleton-room-${
-                // biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
-                index
-              }`}
-            >
-              <div className="flex flex-1 flex-col gap-2">
-                <Skeleton className="h-5 w-3/4" />
-                <div className="flex items-center gap-2">
-                  <Skeleton className="h-5 w-16" />
-                  <Skeleton className="h-5 w-20" />
+    <div className="mb-12">
+      <div>
+        {isLoading && (
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 18 }).map((_, index) => (
+              <div
+                className="rounded-lg border bg-card p-4 shadow-sm"
+                key={`skeleton-room-${
+                  // biome-ignore lint/suspicious/noArrayIndexKey: skeleton items don't need stable keys
+                  index
+                }`}
+              >
+                <div className="flex h-full min-h-[88px] flex-col justify-between gap-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <Skeleton className="h-5 w-3/4" />
+                    <Skeleton className="h-4 w-4" />
+                  </div>
+
+                  <div className="flex h-full flex-col justify-between gap-4">
+                    <Skeleton className="h-4 w-full" />
+                    <div className="flex items-center justify-between gap-2">
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-4 w-16" />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <Skeleton className="h-4 w-12" />
-            </div>
-          ))}
+            ))}
+          </div>
+        )}
 
         {!isLoading && data && data.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -52,10 +49,14 @@ export function RoomList() {
               style={{ backgroundImage: 'url(/search-empty.svg)' }}
             />
             <h3 className="font-medium text-foreground text-lg">
-              Nenhuma sala encontrada
+              {searchQuery
+                ? 'Nenhuma sala encontrada'
+                : 'Nenhuma sala encontrada'}
             </h3>
             <p className="text-muted-foreground text-sm">
-              Crie sua primeira sala para começar a receber perguntas
+              {searchQuery
+                ? 'Tente alterar os termos da busca'
+                : 'Crie sua primeira sala para começar a receber perguntas'}
             </p>
           </div>
         )}
@@ -77,34 +78,21 @@ export function RoomList() {
           </div>
         )}
 
-        {data?.map((room) => {
-          return (
-            <Link
-              className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3 hover:bg-accent/50"
-              key={room.id}
-              to={`/room/${room.id}`}
-            >
-              <div className="flex flex-1 flex-col gap-2">
-                <h3 className="font-medium">{room.name}</h3>
-
-                <div className="flex items-center gap-2">
-                  <Badge className="text-xs" variant="secondary">
-                    {dayjs(room.createdAt).fromNow()}
-                  </Badge>
-                  <Badge className="text-xs" variant="secondary">
-                    {room.questionsCount} pergunta(s)
-                  </Badge>
-                </div>
-              </div>
-
-              <span className="flex items-center gap-2 text-sm">
-                Entrar
-                <ArrowRight className="size-4" />
-              </span>
-            </Link>
-          );
-        })}
-      </CardContent>
-    </Card>
+        {data && data.length > 0 && (
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {data.map((room) => (
+              <RoomCard
+                createdAt={room.createdAt}
+                description={room.description}
+                id={room.id}
+                key={room.id}
+                name={room.name}
+                questionsCount={room.questionsCount}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

@@ -1,18 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { z } from 'zod/v4';
 import { useCreateRoom } from '@/http/use-create-room';
-// import { useCreateRoom } from '@/http/use-create-room';
 import { Button } from './ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog';
 import {
   Form,
   FormControl,
@@ -31,7 +32,12 @@ const createRoomSchema = z.object({
 
 type CreateRoomFormData = z.infer<typeof createRoomSchema>;
 
-export function CreateRoomForm() {
+interface CreateRoomFormProps {
+  variant?: 'default' | 'floating';
+}
+
+export function CreateRoomForm({ variant = 'default' }: CreateRoomFormProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const { mutateAsync: createRoom, isPending } = useCreateRoom();
 
   const navigate = useNavigate();
@@ -44,10 +50,15 @@ export function CreateRoomForm() {
     },
   });
 
+  const watchedValues = createRoomForm.watch();
+  const hasFormData =
+    watchedValues.name.trim() !== '' || watchedValues.description.trim() !== '';
+
   async function handleCreateRoom({ name, description }: CreateRoomFormData) {
     const result = await createRoom({ name, description });
 
     createRoomForm.reset();
+    setIsOpen(false);
 
     if (result.roomId) {
       navigate(`/room/${result.roomId}`);
@@ -56,16 +67,41 @@ export function CreateRoomForm() {
     }
   }
 
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open);
+
+    if (!open) {
+      createRoomForm.reset();
+    }
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Criar sala</CardTitle>
-        <CardDescription>
-          Crie uma nova sala para começar a fazer perguntas e receber respostas
-          da I.A.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Dialog onOpenChange={handleOpenChange} open={isOpen}>
+      <DialogTrigger asChild>
+        {variant === 'floating' ? (
+          <Button className="h-12 w-12 rounded-full shadow-xl" size="lg">
+            <Plus className="size-5" />
+          </Button>
+        ) : (
+          <Button className="flex w-full items-center gap-2 sm:w-48">
+            <Plus className="size-4" />
+            Criar sala
+          </Button>
+        )}
+      </DialogTrigger>
+      <DialogContent
+        className="flex h-fit flex-col gap-6 py-8 sm:max-w-[500px]"
+        onEscapeKeyDown={hasFormData ? (e) => e.preventDefault() : undefined}
+        onInteractOutside={hasFormData ? (e) => e.preventDefault() : undefined}
+      >
+        <DialogHeader className="flex h-max flex-col text-left">
+          <DialogTitle>Criar sala</DialogTitle>
+          <DialogDescription>
+            Crie uma nova sala para começar a fazer perguntas e receber
+            respostas da I.A.
+          </DialogDescription>
+        </DialogHeader>
+
         <Form {...createRoomForm}>
           <form
             className="flex flex-col gap-4"
@@ -81,6 +117,7 @@ export function CreateRoomForm() {
                     <FormControl>
                       <Input
                         {...field}
+                        disabled={isPending}
                         placeholder="Digite o nome da sala..."
                       />
                     </FormControl>
@@ -122,7 +159,7 @@ export function CreateRoomForm() {
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

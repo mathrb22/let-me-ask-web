@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useRecordingContext } from '@/hooks/use-recording-context';
 
 interface AudioRecorderModalProps {
   roomId: string;
@@ -24,9 +25,14 @@ const isRecordingSupported =
 
 export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
+  const {
+    isRecording,
+    isPaused,
+    recordingTime,
+    setIsRecording,
+    setIsPaused,
+    setRecordingTime,
+  } = useRecordingContext();
 
   const recorder = useRef<MediaRecorder | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -69,7 +75,7 @@ export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
   useEffect(() => {
     if (isRecording && !isPaused) {
       timerRef.current = setInterval(() => {
-        setRecordingTime((prev) => prev + 1);
+        setRecordingTime(recordingTime + 1);
       }, 1000);
     } else if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -80,7 +86,7 @@ export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
         clearInterval(timerRef.current);
       }
     };
-  }, [isRecording, isPaused]);
+  }, [isRecording, isPaused, recordingTime, setRecordingTime]);
 
   useEffect(() => {
     return cleanupRecording;
@@ -197,7 +203,10 @@ export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2" variant="secondary">
+        <Button
+          className="flex min-w-[232px] items-center gap-2"
+          variant="secondary"
+        >
           {isRecording ? (
             <>
               <div
@@ -207,21 +216,21 @@ export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
             </>
           ) : (
             <>
-              <Radio className="size-4" />
+              <Radio className="size-4 text-primary" />
               Gravar áudio
             </>
           )}
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="sm:max-w-[450px]"
+        className="flex h-fit flex-col gap-6 py-8 sm:max-w-[450px]"
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        <DialogHeader>
-          <DialogTitle>Gravação de Áudio</DialogTitle>
+        <DialogHeader className="text-left">
+          <DialogTitle>Gravação de áudio</DialogTitle>
           <DialogDescription>
-            Grave o áudio da sua transmissão para que a IA possa transcrever e
-            responder perguntas automaticamente.
+            Grave o áudio da sua transmissão para que a IA possa transcrever em
+            tempo real e responder perguntas automaticamente.
           </DialogDescription>
         </DialogHeader>
 
@@ -289,7 +298,7 @@ export function AudioRecorderModal({ roomId }: AudioRecorderModalProps) {
                 onClick={startRecording}
               >
                 <Radio className="size-4" />
-                Iniciar gravação
+                Iniciar nova gravação
               </Button>
             )}
           </div>

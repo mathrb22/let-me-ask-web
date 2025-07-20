@@ -11,9 +11,9 @@ export function QuestionList(props: QuestionListProps) {
   const { data, isLoading } = useRoomQuestions(props.roomId);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" id="questions-section">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-2xl text-foreground">
+        <h2 className="font-semibold text-foreground text-xl md:text-2xl">
           Perguntas & Respostas
         </h2>
       </div>
