@@ -25,25 +25,25 @@ export function RoomCard({
     >
       <div className="flex h-full min-h-[88px] flex-col justify-between gap-3">
         <div className="flex items-center justify-between gap-3">
-          <h3 className="line-clamp-1 font-medium text-card-foreground transition-colors group-hover:text-primary">
+          <h3 className="line-clamp-1 font-medium text-card-foreground transition-all duration-150 group-hover:text-primary">
             {name}
           </h3>
-          <ArrowRight className="size-4 min-w-4 text-muted-foreground transition-colors group-hover:text-primary" />
+          <ArrowRight className="size-4 min-w-4 text-muted-foreground transition-all duration-150 group-hover:text-primary" />
         </div>
 
         <div className="flex h-full flex-col justify-between gap-4">
-          <p className="line-clamp-1 text-muted-foreground text-sm">
+          <p className="line-clamp-1 text-muted-foreground text-sm transition-colors duration-150">
             {description}
           </p>
           <div className="flex items-center justify-between gap-2">
             <Badge
-              className="px-3 py-1 font-medium text-xs dark:bg-zinc-800"
+              className="px-3 py-1 font-medium text-xs transition-all duration-150 dark:bg-zinc-800"
               variant="outline"
             >
               {questionsCount} pergunta(s)
             </Badge>
             <Badge
-              className="rounded-none border-none bg-transparent p-0 text-xs text-zinc-400"
+              className="rounded-none border-none bg-transparent p-0 text-xs text-zinc-400 transition-colors duration-150"
               variant="outline"
             >
               {dayjs(createdAt).fromNow()}

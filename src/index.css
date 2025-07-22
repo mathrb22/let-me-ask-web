@@ -114,8 +114,55 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+
+	html {
+		/* Prevents flash of unstyled content during theme change */
+		color-scheme: dark light;
+	}
+
 	body {
 		@apply bg-background text-foreground;
+		/* Smooth transition for theme changes on the entire body */
+		transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+	}
+
+	/* Global smooth transitions for all elements that change with the theme */
+	* {
+		transition: background-color 200ms ease-in-out, color 200ms ease-in-out,
+			border-color 200ms ease-in-out, box-shadow 200ms ease-in-out,
+			fill 200ms ease-in-out, stroke 200ms ease-in-out, opacity 200ms ease-in-out;
+	}
+
+	/* Exceptions for elements that should not have transitions or already have specific transitions */
+	.no-transition,
+	.no-transition *,
+	[data-no-transition],
+	[data-no-transition] *,
+	.animate-spin,
+	.animate-pulse,
+	[class*='animate-'],
+	.transition-none {
+		transition: none !important;
+	}
+
+	/* Ensure smooth transitions for specific elements */
+	[class*='bg-card'],
+	[class*='text-card-foreground'],
+	[class*='bg-background'],
+	[class*='text-foreground'],
+	[class*='bg-muted'],
+	[class*='text-muted-foreground'],
+	[class*='border-border'],
+	[class*='bg-secondary'],
+	[class*='text-secondary-foreground'],
+	[class*='bg-primary'],
+	[class*='text-primary-foreground'],
+	header,
+	.group,
+	img {
+		transition: background-color 200ms ease-in-out, color 200ms ease-in-out,
+			border-color 200ms ease-in-out, box-shadow 200ms ease-in-out,
+			opacity 200ms ease-in-out !important;
 	}
 
 	/* Remove browser autocomplete styling */
