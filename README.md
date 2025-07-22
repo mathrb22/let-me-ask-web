@@ -117,6 +117,8 @@ A aplicação foi desenvolvida com o intuito de aprimorar os conhecimentos em Re
 
 ## ✨ Features
 
+https://github.com/user-attachments/assets/ae41d2c9-62df-4606-875d-d86f6366ce3b
+
 ### 🏠 **Sistema de Salas**
 
 ✅ **Criação e listagem de salas:** interface para criação, navegação e listagem de salas disponíveis via API.<br/>
