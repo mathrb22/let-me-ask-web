@@ -166,6 +166,10 @@ A aplicação conta com uma **interface moderna e responsiva**, incluindo:
 ✅ **Barra de status de gravação:** indicador fixo no mobile mostrando status da gravação em tempo real<br/>
 ✅ **Busca de salas:** campo de pesquisa com _debounce_ para filtrar salas<br/>
 
+
+https://github.com/user-attachments/assets/bf38a187-6d79-4e6b-9db1-75c598ddd57e
+
+
 ## 🔧 Instalação e execução
 
 Para baixar o código-fonte do projeto em sua máquina, primeiramente terá que ter instalado o [**Git**](https://git-scm.com/).
